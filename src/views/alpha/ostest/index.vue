@@ -1,10 +1,10 @@
 <script lang="ts">
 export default {
-  name: 'alpha'
+  name: 'ostest'
 };
 </script>
 <template>
      <div class="app-container">
-        <h1>alpha</h1>
+        <h1>ostest</h1>
     </div>
 </template>
