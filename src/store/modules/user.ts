@@ -15,11 +15,10 @@ export const useUserStore = defineStore('user', () => {
   const token = useStorage('accessToken', '');
   const nickname = ref('');
   const avatar = ref('');
-  const roles = ref<Array<string>>([]); // 用户角色编码集合 → 判断路由权限
-  const perms = ref<Array<string>>([]); // 用户权限编码集合 → 判断按钮权限
+  const roles = ref<Array<string>>([]); // User role code set → determine routing authority
+  const perms = ref<Array<string>>([]); // User permission code set → judge button permission
 
   /**
-   * 登录调用
    *
    * @param {LoginData}
    * @returns
@@ -30,7 +29,6 @@ export const useUserStore = defineStore('user', () => {
         .then(data => {
           const { tokenType, accessToken } = data;
           
-          // debugger;
           token.value = tokenType + ' ' + accessToken; // Bearer eyJhbGciOiJIUzI1NiJ9.xxx.xxx
           resolve();
         })
@@ -40,13 +38,10 @@ export const useUserStore = defineStore('user', () => {
     });
   }
 
-  // 获取信息(用户昵称、头像、角色集合、权限集合)
   function getInfo() {
     return new Promise<UserInfo>((resolve, reject) => {
-      // debugger
       getUserInfo()
         .then((data) => {
-          // debugger
           if (!data) {
             return reject('Verification failed, please Login again.');
           }
@@ -60,13 +55,11 @@ export const useUserStore = defineStore('user', () => {
           resolve(data);
         })
         .catch(error => {
-          // debugger
           reject(error);
         });
     });
   }
 
-  // 注销
   function logout() {
     return new Promise<void>((resolve, reject) => {
       logoutApi()
@@ -81,7 +74,6 @@ export const useUserStore = defineStore('user', () => {
     });
   }
 
-  // 重置
   function resetToken() {
     token.value = '';
     nickname.value = '';
@@ -102,7 +94,6 @@ export const useUserStore = defineStore('user', () => {
   };
 });
 
-// 非setup
 export function useUserStoreHook() {
   return useUserStore(store);
 }

@@ -92,21 +92,18 @@ orderCount.value = 2000;
             <el-link
               target="_blank"
               type="danger"
-              href="https://www.cnblogs.com/haoxianrui/p/16090029.html"
               >官方0到1教程</el-link
             >
             <el-divider direction="vertical" />
             <el-link
               target="_blank"
               type="success"
-              href="https://gitee.com/youlaiorg/vue3-element-admin"
               >Gitee源码</el-link
             >
             <el-divider direction="vertical" />
             <el-link
               target="_blank"
               type="primary"
-              href="https://github.com/youlaitech/vue3-element-admin"
               >GitHub源码
             </el-link>
           </div>

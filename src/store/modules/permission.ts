@@ -10,14 +10,13 @@ const Layout = () => import("@/layout/index.vue");
 /**
  * Use meta.role to determine if the current user has permission
  *
- * @param roles 用户角色集合
- * @param route 路由
+ * @param roles User character collection
+ * @param route routing
  * @returns
  */
 const hasPermission = (roles: string[], route: RouteRecordRaw) => {
-  // debugger
   if (route.meta && route.meta.roles) {
-    // 角色【超级管理员】拥有所有权限，忽略校验
+    // Character [Super Administrator] with ownership, ignore the verification
     if (roles.includes("ROOT")) {
       return true;
     }
@@ -31,19 +30,19 @@ const hasPermission = (roles: string[], route: RouteRecordRaw) => {
 };
 
 /**
- * 递归过滤有权限的异步(动态)路由
+ * Recursively filtering asynchronous (dynamic) routing
  *
- * @param routes 接口返回的异步(动态)路由
- * @param roles 用户角色集合
- * @returns 返回用户有权限的异步(动态)路由
+ * @param routes Asynchronous (dynamic) routing returned by the interface
+ * @param roles User character collection
+ * @returns Back to the asynchronous (dynamic) routing of the user's authority
  */
 const filterAsyncRoutes = (routes: RouteRecordRaw[], roles: string[]) => {
   const asyncRoutes: RouteRecordRaw[] = [];
 
   routes.forEach((route) => {
-    const tmpRoute = { ...route }; // ES6扩展运算符复制新对象
+    const tmpRoute = { ...route }; // ES6 expansion operator copy new object
 
-    // 判断用户(角色)是否有该路由的访问权限
+    // Determine whether the user (role) has the access right of the route
     if (hasPermission(roles, tmpRoute)) {
       if (tmpRoute.component?.toString() == "Layout") {
         tmpRoute.component = Layout;
@@ -71,7 +70,6 @@ const filterAsyncRoutes = (routes: RouteRecordRaw[], roles: string[]) => {
 // setup
 export const usePermissionStore = defineStore("permission", () => {
   // state
-  // debugger
   const routes = ref<RouteRecordRaw[]>([]);
 
   // actions
@@ -79,20 +77,19 @@ export const usePermissionStore = defineStore("permission", () => {
     routes.value = constantRoutes.concat(newRoutes);
   }
   /**
-   * 生成动态路由
+   * Generate dynamic routing
    *
-   * @param roles 用户角色集合
+   * @param roles User character collection
    * @returns
    */
   function generateRoutes(roles: string[]) {
     return new Promise<RouteRecordRaw[]>((resolve, reject) => {
-      // 接口获取所有路由
+      // Interface obtain all routing
       listRoutes()
         .then(({ data: asyncRoutes }) => {
-          // 根据角色获取有访问权限的路由
-          typeof(asyncRoutes)
-          
-          // debugger
+          // Obtain routes with access rights according to the role
+          typeof (asyncRoutes)
+
           const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
           setRoutes(accessedRoutes);
           resolve(accessedRoutes);
@@ -105,7 +102,6 @@ export const usePermissionStore = defineStore("permission", () => {
   return { routes, setRoutes, generateRoutes };
 });
 
-// 非setup
 export function usePermissionStoreHook() {
   return usePermissionStore(store);
 }
