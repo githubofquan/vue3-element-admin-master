@@ -21,6 +21,19 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/login/index.vue"),
     meta: { hidden: true },
   },
+  {
+    path: "/alpha",
+    component: Layout,
+    redirect: "/alpha/alpha",
+    children: [
+      {
+        path: "alpha",
+        component: () => import("@/views/alpha/alpha/index.vue"),
+        name: "alpha",
+        meta: { title: "alpha", icon: "homepage"},
+      }
+    ],
+  },
 
   {
     path: "/",
@@ -46,7 +59,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     ],
   },
 
-  
+
 ];
 
 /**

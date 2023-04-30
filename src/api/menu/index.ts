@@ -281,7 +281,8 @@ export function listRoutes() {
                 "roles": [
                   "ADMIN"
                 ],
-                "keepAlive": true
+                "keepAlive": true,
+                "affix": true
               }
             }
           ]
